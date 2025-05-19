@@ -10,6 +10,8 @@ class MadClock:
         mode_type = input("Which Mode: ").lower()
         if mode_type == "morse":
             self.show_morse()
+        elif mode_type == "binary":
+            self.show_binary()
 
     def show_morse(self):
         output = []
@@ -20,6 +22,14 @@ class MadClock:
                 output.append("/")
         print(" ".join(output))
 
+    def show_binary(self):
+        output = list()
+        for char in self.time:
+            if char.isdigit():
+                output.append(bin(int(char))[2:])
+            elif char == ":":
+                output.append("/")
+        print(" ".join(output))
 
 if __name__ == "__main__":
     clock = MadClock()
