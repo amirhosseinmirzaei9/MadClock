@@ -15,8 +15,8 @@ Make sure you have **Python 3** installed on your system.
 
 1. Clone or download the project:
 ```bash
-git clone https://github.com/your-username/madclock.git
-cd madclock
+git clone https://github.com/amirhosseinmirzaei9/MadClock.git
+cd MadClock
 ```
 
 2. Run the program:
