@@ -7,13 +7,21 @@ class MadClock:
         self.time = datetime.now().strftime("%H:%M")
 
     def run(self):
-        mode_type = input("Which Mode: ").lower()
-        if mode_type == "morse":
-            self.show_morse()
-        elif mode_type == "binary":
-            self.show_binary()
-        elif mode_type == "reverse":
-            self.show_reverse()
+        while True:
+            mode_type = input("Which Mode (or 'exit' to quit): ").lower()
+            if mode_type == "morse":
+                self.show_morse()
+            elif mode_type == "binary":
+                self.show_binary()
+            elif mode_type == "reverse":
+                self.show_reverse()
+            elif mode_type == "exit":
+                print("Goodbye!")
+                break
+            else:
+                print("Invalid mode. Please choose from: morse, binary, reverse.")
+
+
 
     def show_morse(self):
         output = []
