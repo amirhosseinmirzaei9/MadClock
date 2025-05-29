@@ -138,7 +138,7 @@ class MadClock:
             "typewriter": "Show the clock in a typewriter-style typing effect.",
             "live": "Show a live updating clock.",
             "format": "Toggle between 12h and 24h formats.",
-            "clear" : "Clearing terminal Page",
+            "clear": "Clear the terminal screen and refresh the view.",
             "exit" : "Exit the clock app.",
         }
         print(Fore.CYAN + "\nAvailable Modes:")
