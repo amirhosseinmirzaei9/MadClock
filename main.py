@@ -47,7 +47,12 @@ class MadClock:
             elif mode_type == "digital":
                 self.show_digital()
             elif mode_type == "exit":
-                print(Fore.CYAN + "Goodbye!")
+                msg = "Goodbye!!!"
+                for char in msg:
+                    print(Fore.GREEN + char, end="", flush=True)
+                    time.sleep(0.2)
+                time.sleep(0.3)
+                os.system("cls" if os.name == "nt" else "clear")
                 break
             else:
                 print(Fore.RED + "Invalid mode. Please choose from:")
@@ -149,3 +154,4 @@ class MadClock:
 if __name__ == "__main__":
     clock = MadClock()
     clock.run()
+
