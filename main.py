@@ -55,7 +55,7 @@ class MadClock:
                 else:
                     print(Fore.RED + "Invalid mode. Please choose from:")
                     print(Fore.YELLOW + ", ".join(MODES))
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             print ("\n")
             self.exit_message()
     
