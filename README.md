@@ -21,7 +21,7 @@ cd MadClock
 
 2. Run the program:
 ```bash
-python madclock.py
+python main.py
 ```
 ## ⚙️ Available Modes
 
