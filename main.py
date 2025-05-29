@@ -168,6 +168,9 @@ class MadClock:
 
 
 if __name__ == "__main__":
+    colors = [Fore.LIGHTBLUE_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTMAGENTA_EX, Fore.LIGHTCYAN_EX, Fore.LIGHTYELLOW_EX]
+    f = Figlet(font="slant")
+    print(random.choice(colors) + f.renderText("MAD CLOCK"))
     clock = MadClock()
     clock.run()
 
