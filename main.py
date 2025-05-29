@@ -9,7 +9,7 @@ import random
 
 
 
-MODES = ["morse", "binary", "typewriter", "reverse", "hex", "reminder", "live", "clear", "digital","format", "exit", "help", "ascii"]
+MODES = ["morse", "binary", "typewriter", "reverse", "random", "hex", "reminder", "live", "clear", "digital","format", "exit", "help", "ascii"]
 
 init(autoreset=True)
 
@@ -49,6 +49,8 @@ class MadClock:
                     self.show_help()
                 elif mode_type == "digital":
                     self.show_digital()
+                elif mode_type == "random":
+                    self.show_random()
                 elif mode_type == "exit":
                     self.exit_message()
                     break
@@ -63,7 +65,7 @@ class MadClock:
         msg = "Goodbye!!!"
         for char in msg:
             print(Fore.GREEN + char, end="", flush=True)
-            time.sleep(0.2)
+            time.sleep(0.1)
         time.sleep(0.3)
         os.system("cls" if os.name == "nt" else "clear")
     def show_morse(self):
@@ -115,6 +117,22 @@ class MadClock:
             time.sleep(1)
             os.system("cls" if os.name == "nt" else "clear")
 
+    def show_random(self):
+        random_modes = [
+            self.show_morse,
+            self.show_binary,
+            self.show_typewriter,
+            self.show_reverse,
+            self.show_hex,
+            self.show_ascii,
+            self.show_digital,
+    ]
+        chosen = random.choice(random_modes)
+        mode_name = chosen.__name__.replace("show_", "")
+        print(Fore.LIGHTBLUE_EX + f"\nRandom Mode Selected: {mode_name.upper()}\n")
+        chosen()
+
+
     
     def show_hex(self):
         time = self.get_time().split(" ")[0]
@@ -142,6 +160,7 @@ class MadClock:
 #            "reminder": "Set a time reminder that alerts you when the time comes.",
             "digital": "Display time in digital format with seconds.",
             "typewriter": "Show the clock in a typewriter-style typing effect.",
+            "random": "Display time using a random mode each time you run it.",
             "live": "Show a live updating clock.",
             "format": "Toggle between 12h and 24h formats.",
             "clear": "Clear the terminal screen and refresh the view.",
