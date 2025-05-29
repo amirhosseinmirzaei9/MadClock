@@ -9,7 +9,7 @@ import random
 
 
 
-MODES = ["morse", "binary", "typewriter", "reverse", "hex", "reminder", "live", "digital","format", "exit", "help", "ascii"]
+MODES = ["morse", "binary", "typewriter", "reverse", "hex", "reminder", "live", "clear", "digital","format", "exit", "help", "ascii"]
 
 init(autoreset=True)
 
@@ -38,6 +38,8 @@ class MadClock:
                 self.show_live_clock()
             elif mode_type == "hex":
                 self.show_hex()
+            elif mode_type == "clear":
+                self.clear()
             elif mode_type == "ascii":
                 self.show_ascii()
             elif mode_type == "typewriter":
@@ -103,7 +105,10 @@ class MadClock:
                 print(f"\r{self.get_time():<12}", end="", flush=True)
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("\n" + Fore.RED + "Live clock stopped.")
+            print("\n" + Fore.RED + "Live clock stopped. Returning to main menu....")
+            time.sleep(1)
+            os.system("cls" if os.name == "nt" else "clear")
+
     
     def show_hex(self):
         time = self.get_time().split(" ")[0]
@@ -133,7 +138,8 @@ class MadClock:
             "typewriter": "Show the clock in a typewriter-style typing effect.",
             "live": "Show a live updating clock.",
             "format": "Toggle between 12h and 24h formats.",
-            "exit": "Exit the clock app.",
+            "clear" : "Clearing terminal Page",
+            "exit" : "Exit the clock app.",
         }
         print(Fore.CYAN + "\nAvailable Modes:")
         for k, v in help_text.items():
@@ -150,6 +156,10 @@ class MadClock:
             time.sleep(0.1)
         print()
         print(Fore.GREEN + "Done!")
+
+    def clear(self):
+        os.system("cls" if os.name == "nt" else "clear")
+
 
 if __name__ == "__main__":
     clock = MadClock()
