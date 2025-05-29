@@ -24,42 +24,48 @@ class MadClock:
             return datetime.now().strftime("%H:%M")
 
     def run(self):
-        while True:
-            mode_type = input("Which Mode (or 'exit' to quit): ").strip().lower()
-            if mode_type == "morse":
-                self.show_morse()
-            elif mode_type == "binary":
-                self.show_binary()
-            elif mode_type == "format":
-                self.toggle_format()
-            elif mode_type == "reverse":
-                self.show_reverse()
-            elif mode_type == "live":
-                self.show_live_clock()
-            elif mode_type == "hex":
-                self.show_hex()
-            elif mode_type == "clear":
-                self.clear()
-            elif mode_type == "ascii":
-                self.show_ascii()
-            elif mode_type == "typewriter":
-                self.show_typewriter()
-            elif mode_type == "help":
-                self.show_help()
-            elif mode_type == "digital":
-                self.show_digital()
-            elif mode_type == "exit":
-                msg = "Goodbye!!!"
-                for char in msg:
-                    print(Fore.GREEN + char, end="", flush=True)
-                    time.sleep(0.2)
-                time.sleep(0.3)
-                os.system("cls" if os.name == "nt" else "clear")
-                break
-            else:
-                print(Fore.RED + "Invalid mode. Please choose from:")
-                print(Fore.YELLOW + ", ".join(MODES))
+        try:
+            while True:
+                mode_type = input("Which Mode (or 'exit' to quit): ").strip().lower()
+                if mode_type == "morse":
+                    self.show_morse()
+                elif mode_type == "binary":
+                    self.show_binary()
+                elif mode_type == "format":
+                    self.toggle_format()
+                elif mode_type == "reverse":
+                    self.show_reverse()
+                elif mode_type == "live":
+                    self.show_live_clock()
+                elif mode_type == "hex":
+                    self.show_hex()
+                elif mode_type == "clear":
+                    self.clear()
+                elif mode_type == "ascii":
+                    self.show_ascii()
+                elif mode_type == "typewriter":
+                    self.show_typewriter()
+                elif mode_type == "help":
+                    self.show_help()
+                elif mode_type == "digital":
+                    self.show_digital()
+                elif mode_type == "exit":
+                    self.exit_message()
+                    break
+                else:
+                    print(Fore.RED + "Invalid mode. Please choose from:")
+                    print(Fore.YELLOW + ", ".join(MODES))
+        except KeyboardInterrupt:
+            print ("\n")
+            self.exit_message()
     
+    def exit_message(self):
+        msg = "Goodbye!!!"
+        for char in msg:
+            print(Fore.GREEN + char, end="", flush=True)
+            time.sleep(0.2)
+        time.sleep(0.3)
+        os.system("cls" if os.name == "nt" else "clear")
     def show_morse(self):
         time = self.get_time()
         output = []
