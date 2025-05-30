@@ -1,12 +1,15 @@
 from datetime import datetime
-from colorama import init, Fore, Style
-from pyfiglet import Figlet
-from clock_modes.morse import num_morse_code
 import time
 import json
+import contextlib
 import os
 import random
 
+from colorama import init, Fore, Style
+from pyfiglet import Figlet
+
+
+from clock_modes.morse import num_morse_code
 
 
 MODES = ["morse", "binary", "typewriter", "reverse", "random", "hex", "reminder", "live", "clear", "digital","format", "exit", "help", "ascii"]
@@ -16,6 +19,12 @@ init(autoreset=True)
 class MadClock:
     def __init__(self):
         self.time_format = "12h" 
+
+        with open(os.devnull, 'w') as fnull:
+            with contextlib.redirect_stdout(fnull), contextlib.redirect_stderr(fnull):
+                import pygame
+                pygame.mixer.init()
+                self.sound = pygame.mixer.Sound("sounds/tw.wav")
         
     def get_time(self):
         if self.time_format == "12h":
@@ -64,14 +73,16 @@ class MadClock:
     def exit_message(self):
         msg = "Goodbye!!!"
         for char in msg:
+            self.sound.play()
             print(Fore.GREEN + char, end="", flush=True)
             time.sleep(0.1)
         time.sleep(0.3)
         os.system("cls" if os.name == "nt" else "clear")
+
     def show_morse(self):
-        time = self.get_time()
+        current_time = self.get_time()
         output = []
-        for char in time:
+        for char in current_time:
             if char in num_morse_code:
                 output.append(num_morse_code[char])
             elif char == ":":
@@ -79,9 +90,9 @@ class MadClock:
         print(Fore.YELLOW + " ".join(output))
 
     def show_binary(self):
-        time = self.get_time()
+        current_time = self.get_time()
         output = []
-        for char in time:
+        for char in current_time:
             if char.isdigit():
                 output.append(format(int(char), "04b"))
             elif char == ":":
@@ -90,9 +101,9 @@ class MadClock:
 
     
     def show_reverse(self):
-        time = self.get_time()
-        time_part = time.split(" ")[0]  
-        suffix = time.split(" ")[1] if self.time_format == "12h" else ""
+        current_time = self.get_time()
+        time_part = current_time.split(" ")[0]  
+        suffix = current_time.split(" ")[1] if self.time_format == "12h" else ""
         hour, minute = time_part.split(":")
         reversed_hour = hour[::-1]
         reversed_minute = minute[::-1]
@@ -135,9 +146,9 @@ class MadClock:
 
     
     def show_hex(self):
-        time = self.get_time().split(" ")[0]
+        current_time = self.get_time().split(" ")[0]
         output = []
-        for char in time:
+        for char in current_time:
             if char.isdigit():
                 output.append(hex(int(char))[2:].upper())
             elif char == ":":
@@ -146,7 +157,7 @@ class MadClock:
 
     def show_ascii(self):
         time_str = self.get_time()
-        fonts = ["epic" , "slant", "big", "digital", "block", "chunky"]
+        fonts = ["epic", "slant", "big", "digital", "block", "chunky"]
         f = Figlet(font=random.choice(fonts))
         print(Fore.LIGHTCYAN_EX + f.renderText(time_str))
 
@@ -175,12 +186,15 @@ class MadClock:
 
     def show_typewriter(self):
         time_str = self.get_time()
-        print(Fore.GREEN + "Typing time...", end="", flush=True)
+
         for char in time_str:
+            self.sound.play()
             print(Fore.GREEN + char, end="", flush=True)
-            time.sleep(0.1)
+            time.sleep(0.12)
+
         print()
         print(Fore.GREEN + "Done!")
+
 
     def clear(self):
         os.system("cls" if os.name == "nt" else "clear")
